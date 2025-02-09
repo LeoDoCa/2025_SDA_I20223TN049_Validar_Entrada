@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario con validación de entrada</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/19.5.3/js/intlTelInput.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/19.5.3/css/intlTelInput.css">
+    <link rel="stylesheet" href="/css/arreglar-estilo-iti.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row vh-100 justify-content-center align-items-center">
+            <div class="col-10 p-5 shadow">
+                <h1>Registro de empresa</h1>
+                <div class="row mt-4">
+                    <form action="registro_empresas.html" onsubmit="return validar()">
+                        <div class="row my-4">
+                            <div class="col-12 form-floating">
+                                <input type="text" minlength="3" maxlength="100" required pattern="^[A-Za-z0-9\W]{3,100}+$"
+                                    class="form-control" id="razonsocial" onkeyup="activarBoton()"
+                                    placeholder="Nombre de la empresa" title="Escribe el nombre de la empresa" />
+                                <label for="razonsocial" class="ms-3 text-muted">Razón social</label>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12 form-floating">
+                                        <input class="form-control" pattern="^[A-ZÑ&]{3}\d{6}[A-Z0-9]{3}$"
+                                            minlength="12" maxlength="12" id="rfc" type="text" required
+                                            onkeyup="activarBoton()" placeholder="RFC de la empresa" title="Escribe el RFC de la empresa, con el formato del RFC de una persona moral"/>
+                                        <label class="ms-3 text-muted" for="rfc">RFC</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input class="form-control" style="height: 58px;" id="telefono" type="tel"
+                                            pattern="^\d{10}" required onkeyup="activarBoton()"
+                                            placeholder="Teléfono" title="Escribe el teléfono de contacto de la empresa"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-12 form-floating">
+                                <input type="text" required minlength="8" maxlength="120"
+                                    pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ' ]+$" class="form-control" id="contacto"
+                                    onkeyup="activarBoton()" placeholder="Contacto de la empresa" title="Escribe el nombre de la persona que será el contacto de la empresa"/>
+                                <label class="ms-3 text-muted" for="contacto">Contacto</label>
+                            </div>
+                        </div>
+                        <div class="row my-3 d-flex align-items-center">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12 form-floating">
+                                        <input type="email" maxlength="320" required class="form-control" id="correo"
+                                            onkeyup="activarBoton()"
+                                            pattern="^(?=.{1,64}@.{1,255}$)(?=.{6,320}$)[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,255}\.[A-Za-z]{2,63}$"
+                                            placeholder="Correo electronico de la empresa" title="Escribe el correo electrónico de contacto de la empresa"/>
+                                        <label class="ms-3 text-muted" for="correo">Correo</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row ">
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-primary"
+                                            style="height: 50px; width: 120px; border-radius: 12px;" type="submit"
+                                            id="enviar" disabled>Registrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function activarBoton() {
+            const razonsocial = document.getElementById("razonsocial");
+            const rfc = document.getElementById("rfc");
+            const telefono = document.getElementById("telefono");
+            const contacto = document.getElementById("contacto");
+            const correo = document.getElementById("correo");
+            const boton = document.getElementById("enviar");
+
+            if (razonsocial.value.trim() !== "" && rfc.value.trim() !== "" && telefono.value.trim() !== "" && contacto.value.trim() !== "" && correo.value.trim() !== "") {
+                boton.removeAttribute('disabled')
+            } else {
+                boton.setAttribute('disabled', "true");
+            }
+        }
+
+        const input = document.querySelector("#telefono");
+        window.intlTelInput(input, {
+            initialCountry: "mx",
+            nationalMode: true,
+            loadUtils: () => import("/intl-tel-input/js/utils.js?1733756310855"),
+        });
+
+        function validar() {
+            var telefono = document.getElementById("telefono").value;
+            var regex = /^\d{10}$/;
+
+            if (!regex.test(telefono)) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "El teléfono no es válido, vuelve a intentarlo.",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                });
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("enviar").addEventListener("click", (event) => {
+                    let valido = true;
+                    document.querySelectorAll("input").forEach((input) => {
+                        const regex = new RegExp(input.pattern);
+                        let errorElement = input.nextElementSibling;
+                        if (
+                            !errorElement ||
+                            !errorElement.classList.contains("error-text")
+                        ) {
+                            errorElement = document.createElement("div");
+                            errorElement.classList.add("error-text", "text-danger", "mt-1");
+                            input.parentNode.appendChild(errorElement);
+                        }
+
+                        if (!regex.test(input.value)) {
+                            errorElement.textContent = obtenerMensajeError(input.id);
+                            valido = false;
+                        } else {
+                            errorElement.textContent = "";
+                        }
+                    });
+                    if (!valido) event.preventDefault();
+                });
+        });
+        function obtenerMensajeError(id) {
+            const mensajes = {
+                razonsocial: "Solo puedes escribir letras, números, espacios y &._-'",
+                rfc: "Debes escribir el RFC con el formato de una persona moral",
+                telefono: "El teléfono debe tener 10 dígitos numéricos",
+                contacto: "Solo se permiten letras y espacios",
+                correo: "Formato de correo electrónico inválido (ejemplo@dominio.com)",
+            };
+            return mensajes[id] || "Formato inválido";
+        }
+    </script>
+</body>
+
+</html>
