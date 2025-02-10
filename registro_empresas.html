@@ -45,7 +45,7 @@
                             <div class="col-6">
                                 <div class="row">
                                     <div class="col-12">
-                                        <input class="form-control" style="height: 58px;" id="telefono" type="tel"
+                                        <input class="form-control" style="height: 58px;" id="phone" type="tel"
                                             pattern="^\d{10}" required onkeyup="activarBoton()"
                                             placeholder="Teléfono" title="Escribe el teléfono de contacto de la empresa"/>
                                     </div>
@@ -91,7 +91,7 @@
         function activarBoton() {
             const razonsocial = document.getElementById("razonsocial");
             const rfc = document.getElementById("rfc");
-            const telefono = document.getElementById("telefono");
+            const telefono = document.getElementById("phone");
             const contacto = document.getElementById("contacto");
             const correo = document.getElementById("correo");
             const boton = document.getElementById("enviar");
@@ -103,7 +103,7 @@
             }
         }
 
-        const input = document.querySelector("#telefono");
+        const input = document.querySelector("#phone");
         window.intlTelInput(input, {
             initialCountry: "mx",
             nationalMode: true,
@@ -111,7 +111,7 @@
         });
 
         function validar() {
-            var telefono = document.getElementById("telefono").value;
+            var telefono = document.getElementById("phone").value;
             var regex = /^\d{10}$/;
 
             if (!regex.test(telefono)) {
@@ -157,7 +157,7 @@
             const mensajes = {
                 razonsocial: "Solo puedes escribir letras, números, espacios y &._-'",
                 rfc: "Debes escribir el RFC con el formato de una persona moral",
-                telefono: "El teléfono debe tener 10 dígitos numéricos",
+                phone: "El teléfono debe tener 10 dígitos numéricos",
                 contacto: "Solo se permiten letras y espacios",
                 correo: "Formato de correo electrónico inválido (ejemplo@dominio.com)",
             };
