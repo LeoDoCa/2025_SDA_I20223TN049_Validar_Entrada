@@ -35,7 +35,7 @@
                             <div class="col-6">
                                 <div class="row">
                                     <div class="col-12 form-floating">
-                                        <input class="form-control" pattern="^[A-ZÑ&]{3}\d{6}[A-Z0-9]{3}$"
+                                        <input class="form-control" pattern="^[A-ZÑ&]{3,4}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{3}$"
                                             minlength="12" maxlength="12" id="rfc" type="text" required
                                             onkeyup="activarBoton()" placeholder="RFC de la empresa" title="Escribe el RFC de la empresa, con el formato del RFC de una persona moral"/>
                                         <label class="ms-3 text-muted" for="rfc">RFC</label>
@@ -46,7 +46,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <input class="form-control" style="height: 58px;" id="phone" type="tel"
-                                            pattern="^\d{10,12}" required onkeyup="activarBoton()" title="Escribe el teléfono de contacto de la empresa" />
+                                            pattern="^[\d ]{12,14}$" required onkeyup="activarBoton()" title="Escribe el teléfono de contacto de la empresa" />
                                     </div>
                                 </div>
                             </div>
@@ -103,6 +103,7 @@
             const contacto = document.getElementById("contacto");
             const correo = document.getElementById("correo");
             const boton = document.getElementById("enviar");
+            
 
             if (razonsocial.value.trim() !== "" && rfc.value.trim() !== "" && telefono.value.trim() !== "" && contacto.value.trim() !== "" && correo.value.trim() !== "") {
                 boton.removeAttribute('disabled')
@@ -113,7 +114,7 @@
 
         function validar() {
             var telefono = document.getElementById("phone").value;
-            var regex = /^\d{10,12}$/;
+            var regex = /^[\d ]{12,14}$/;
 
             if (!regex.test(telefono)) {
                 Swal.fire({
